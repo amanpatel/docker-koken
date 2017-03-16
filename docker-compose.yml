@@ -1,0 +1,38 @@
+version: '2'
+
+services:
+  web:
+    build: .
+    hostname: koken.localhost
+    volumes:
+      - $HOME/.docker/koken/html:/var/www/html
+    networks:
+      - web
+      - back
+    labels:
+      - "traefik.backend=Koken"
+      - "traefik.frontend.rule=Host:koken.localhost"
+      - "traefik.port=80"
+      - "traefik.docker.network=traefik_webgateway"
+
+  db:
+    image: mysql:latest
+    environment:
+      - MYSQL_DATABASE=koken
+      - MYSQL_USER=koken
+      - MYSQL_PASSWORD=2KuK6WL6GFD4Qd7fbfYJN8NQrjZ3hB69P3qaEe773XRt74Gq6ic6qpc2mqPu6469
+      - MYSQL_ROOT_PASSWORD=S6cFtD2d3Nt2BZpJJ94u2jZEjzF4V8cXPy4vahMBD75e8Jt5uZe7ZMri3799y476
+    volumes:
+      - $HOME/.docker/koken/mysql:/var/lib/mysql
+    networks:
+      - back
+    restart: always
+    labels:
+      - "traefik.enable=false"
+
+networks:
+  web:
+    external:
+      name: traefik_webgateway
+  back:
+    driver: bridge
