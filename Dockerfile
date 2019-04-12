@@ -6,7 +6,7 @@ RUN echo "deb-src http://www.deb-multimedia.org jessie main non-free" >> /etc/ap
 RUN apt-get update && apt-get install -y --force-yes libmcrypt-dev \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
-        libpng12-dev \
+        libpng-dev \
         ffmpeg \
         curl \
         unzip \
